@@ -52,3 +52,14 @@
                             stringHelper.truncateAInFirst2Positions(input)
                     );
                 }
+
+11. Requirement : Say we have 4 test classes and we want to run only 3 test classes. We can achieve this using Junit suits
+    -----------
+
+    Test suite : Group of test classes that we want to execute in a single shot
+
+        @RunWith(Suite.class)
+        @Suite.SuiteClasses({ArraysCompareTest.class, StringHelperTest.class})
+        public class TestSuite_one {
+        }
+
