@@ -16,3 +16,39 @@
                       To solve this, use assertArraysEquals()
 
 7. assertArraysEquals() : to compare values of 2 arrays
+
+8. Testing exceptions : @Test(expected = NullPointerException.class)
+
+9. Performance testing :  @Test(timeout = 1000)
+
+10. Parameterized Tests :
+    -------------------
+    Step 1: Make class as parameterized class : @RunWith(Parameterized.class)
+    Step 2 : Create collection of input, output parameters
+                 @Parameters
+                    public static Collection<String[]> testConditions() {
+                       String expectedOutputs[][] = {
+                               {"AACD", "CD"},
+                               {"ACD", "CD"}
+                       };
+                       return Arrays.asList(expectedOutputs);
+                    }
+    This will internally call Constructor of class with 2 params (input and output), that will be set at a class level
+
+                       private String input;
+                        private String output;
+
+                        public StringHelperParameterizedTest(String input, String output) {
+                            this.input = input;
+                            this.output = output;
+                        }
+
+    Step 3 : Use these class level params in your test case
+
+                @Test
+                public void test_truncateAInFirst2Positions() {
+                    assertEquals(
+                            output,
+                            stringHelper.truncateAInFirst2Positions(input)
+                    );
+                }
