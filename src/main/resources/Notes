@@ -1,0 +1,4 @@
+1. JUNIT : Unit means piece of code, can be method or group of methods that we will test
+2. Best practices :
+    - Meaningful names
+    - Verify only One test condition per test case
