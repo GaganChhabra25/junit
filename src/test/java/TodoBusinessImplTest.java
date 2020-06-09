@@ -1,6 +1,7 @@
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.util.Arrays;
@@ -38,4 +39,30 @@ public class TodoBusinessImplTest {
         verify(mockedTodoService, times(1)).deleteTodo("Java");
         verify(mockedTodoService, never()).deleteTodo("Spring");
     }
+
+    @Test
+    public void test_deleteTodoNotRelatedToSpring_captureArguments() {
+        ArgumentCaptor<String> argumentCaptor = new ArgumentCaptor<String>();
+        TodoService mockedTodoService = mock(TodoService.class);
+        when(mockedTodoService.retrieveTodos("Gagan")).thenReturn(list);
+        TodoBusinessImpl todoBusiness = new TodoBusinessImpl(mockedTodoService);
+        todoBusiness.deleteTodoNotRelatedToSpring("Gagan");
+
+        verify(mockedTodoService).deleteTodo(argumentCaptor.capture());
+        assertEquals("Java", argumentCaptor.getValue());
+    }
+
+    @Test
+    public void test_deleteTodoNotRelatedToSpring_captureArguments_multiple() {
+        ArgumentCaptor<String> argumentCaptor = new ArgumentCaptor<String>();
+        TodoService mockedTodoService = mock(TodoService.class);
+        when(mockedTodoService.retrieveTodos("Gagan")).thenReturn(list);
+        TodoBusinessImpl todoBusiness = new TodoBusinessImpl(mockedTodoService);
+        todoBusiness.deleteTodoNotRelatedToSpring("Gagan");
+
+        verify(mockedTodoService).deleteTodo(argumentCaptor.capture());
+        assertEquals(1, argumentCaptor.getAllValues().size());
+    }
+
+
 }

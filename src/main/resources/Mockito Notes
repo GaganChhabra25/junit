@@ -21,4 +21,9 @@
 
              verify(mockedTodoService, times(1)).deleteTodo("Java");
 
-5.
+5. Argument capture : is useful when we want to check the values passed to a mock method
+
+             ArgumentCaptor<String> argumentCaptor = new ArgumentCaptor<String>();
+             verify(mockedTodoService).deleteTodo(argumentCaptor.capture());
+             assertEquals("Java", argumentCaptor.getValue());
+             assertEquals(1, argumentCaptor.getAllValues().size());
