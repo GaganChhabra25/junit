@@ -1,2 +1,24 @@
  1. Mocking : Is creating objects that simulates the behaviour of real objects.
- 2.
+ 2. Matchers : Either use matchers or harcoded values. We cant combine both
+
+  when(listMock.subList(anyInt(), 5)).thenThrow(new RuntimeException()); // ERROR
+
+          org.mockito.exceptions.misusing.InvalidUseOfMatchersException:
+          Invalid use of argument matchers!
+          2 matchers expected, 1 recorded:
+          -> at ListTest.test_matchers(ListTest.java:31)
+
+          This exception may occur if matchers are combined with raw values:
+              //incorrect:
+              someMethod(anyObject(), "raw String");
+
+3. How to verify if specific method is called on mocked object. // Use VERIFY
+
+            verify(mockedTodoService).deleteTodo("Java");
+             verify(mockedTodoService, never()).deleteTodo("Spring");
+
+4. How many times specific method is called
+
+             verify(mockedTodoService, times(1)).deleteTodo("Java");
+
+5.

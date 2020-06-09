@@ -8,8 +8,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class TodoBusinessImplTest {
 
@@ -17,7 +16,7 @@ public class TodoBusinessImplTest {
 
     @Before
     public void setup() {
-        list = Arrays.asList("Spring", "Spring MVC");
+        list = Arrays.asList("Spring", "Spring MVC", "Java");
     }
 
     @Test
@@ -27,5 +26,16 @@ public class TodoBusinessImplTest {
         TodoBusinessImpl todoBusiness = new TodoBusinessImpl(mockedTodoService);
         List<String> result = todoBusiness.retrieveTodosRelatedToString("Gagan");
         assertEquals(2, result.size());
+    }
+
+    @Test
+    public void test_deleteTodoNotRelatedToSpring() {
+        TodoService mockedTodoService = mock(TodoService.class);
+        when(mockedTodoService.retrieveTodos("Gagan")).thenReturn(list);
+        TodoBusinessImpl todoBusiness = new TodoBusinessImpl(mockedTodoService);
+        todoBusiness.deleteTodoNotRelatedToSpring("Gagan");
+        verify(mockedTodoService).deleteTodo("Java");
+        verify(mockedTodoService, times(1)).deleteTodo("Java");
+        verify(mockedTodoService, never()).deleteTodo("Spring");
     }
 }
